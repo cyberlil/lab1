@@ -71,3 +71,64 @@ def data_separation_x_y():
         y = df['USD']
         x.to_csv("X.csv", sep='\t', encoding='utf-8')
         y.to_csv("Y.csv", sep='\t', encoding='utf-8')
+
+def data_separation_year():
+    df = pd.read_csv('dataset.csv', sep=',')
+    t = df['Date'][0]
+    T = []
+    U = []
+    for x, u in zip(df['Date'], df['USD']):
+        if date_year(x) == date_year(t):
+            T.append(x)
+            U.append(u)
+        else:
+            record("lab_2/year/" + T[0] + "_" + T[-1] + ".csv", T, U)
+            T.clear()
+            U.clear()
+            T.append(x)
+            U.append(u)
+            t = x
+
+def data_separation_month():
+    df = pd.read_csv('dataset.csv', sep=',')
+    t = df['Date'][0]
+    T = []
+    U = []
+    for x, u in zip(df['Date'], df['USD']):
+        if date_month(x) == date_month(t):
+            T.append(x)
+            U.append(u)
+        else:
+            record("lab_2/month/" + T[0] + "_" + T[-1] + ".csv", T, U)
+            T.clear()
+            U.clear()
+            T.append(x)
+            U.append(u)
+            t = x
+
+def data_separation_week():
+    df = pd.read_csv('dataset.csv', sep=',')
+    T = []
+    U = []
+    count = 1
+    for x, u in zip(df['Date'], df['USD']):
+        if count <= 7:
+            T.append(x)
+            U.append(u)
+            count = count + 1
+        else:
+            count = 1
+            record("lab_2/week/" + T[0] + "_" + T[-1] + ".csv", T, U)
+            T.clear()
+            U.clear()
+            T.append(x)
+            U.append(u)
+            count = count + 1
+
+
+if __name__ == '__main__':
+    #recording_data()
+    data_separation_x_y()
+    #data_separation_year()
+    #data_separation_month()
+    #data_separation_week()
