@@ -64,3 +64,10 @@ def recording_data():
             u.append(usd)
             d += datetime.timedelta(days=1)
     record("dataset.csv", t, u)
+
+def data_separation_x_y():
+        df = pd.read_csv('dataset.csv', sep=',')
+        x = df['Date']
+        y = df['USD']
+        x.to_csv("X.csv", sep='\t', encoding='utf-8')
+        y.to_csv("Y.csv", sep='\t', encoding='utf-8')
