@@ -63,6 +63,7 @@ def recording_data():
             usd = response['Valute']['USD']['Value']
             u.append(usd)
             d += datetime.timedelta(days=1)
+            print(date)
     record("dataset.csv", t, u)
 
 def data_separation_x_y():
@@ -82,7 +83,7 @@ def data_separation_year():
             T.append(x)
             U.append(u)
         else:
-            record("lab_2/year/" + T[0] + "_" + T[-1] + ".csv", T, U)
+            record("lab2/year/" + T[0] + "_" + T[-1] + ".csv", T, U)
             T.clear()
             U.clear()
             T.append(x)
@@ -99,7 +100,7 @@ def data_separation_month():
             T.append(x)
             U.append(u)
         else:
-            record("lab_2/month/" + T[0] + "_" + T[-1] + ".csv", T, U)
+            record("lab2/month/" + T[0] + "_" + T[-1] + ".csv", T, U)
             T.clear()
             U.clear()
             T.append(x)
@@ -118,17 +119,37 @@ def data_separation_week():
             count = count + 1
         else:
             count = 1
-            record("lab_2/week/" + T[0] + "_" + T[-1] + ".csv", T, U)
+            record("lab2/week/" + T[0] + "_" + T[-1] + ".csv", T, U)
             T.clear()
             U.clear()
             T.append(x)
             U.append(u)
             count = count + 1
 
+def search_data():
+    print("Введите год 2000-2024:")
+    year = input()
+    print("Введите месяц:")
+    month = input()
+    print("Введите день:")
+    day = input()
+    string = year + '-' + month + '-' + day
+    df = pd.read_csv('dataset.csv', sep=',')
+    for x, u in zip(df['Date'], df['USD']):
+        if string == x:
+            print(u)
+
+def next_():
+    df = pd.read_csv('dataset.csv', sep=',')
+    for x, u in zip(df['Date'], df['USD']):
+        print(x, u)
+        keyboard.wait('enter')
 
 if __name__ == '__main__':
     #recording_data()
-    data_separation_x_y()
+    #data_separation_x_y()
     #data_separation_year()
     #data_separation_month()
     #data_separation_week()
+    search_data()
+    #next_()
